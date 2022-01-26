@@ -17,11 +17,15 @@ function main() {
 
     credentials=$(cf service-key $service_name $service_key | sed -ne '/{/,$p')
 
+    echo "Credentials: $credentials"
+
     db_host=$(echo $credentials | jq -r '.hostname')
     db_name=$(echo $credentials | jq -r '.name')
     db_username=$(echo $credentials | jq -r '.username')
     db_password=$(echo $credentials | jq -r '.password')
     db_port=$(echo $credentials | jq -r '.port')
+
+    echo "Params: $db_host $db_name $db_username $db_password $db_port"
 
     test -n "$db_host" || exit 1
 
